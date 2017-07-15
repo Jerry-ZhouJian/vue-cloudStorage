@@ -120,9 +120,15 @@ export default {
 
 
     //切换显示形式
-    mainContentDataStyle:true
+    mainContentDataStyle:true,
+
+    //控制全选
+    checkAll:false,
+
+
+    //控制环境菜单
+    contextmenu:false
 
    
-
 
 }

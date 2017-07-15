@@ -3,14 +3,12 @@
 	<nav>
 		<ul id="nav-left">
 			<li @click="createFile"><a href="javascript:;">新建文件夹</a></li>
-			<li @click="cloneFile"><a href="javascript:;">复制</a></li>
+			<li @mousedown="cloneFile"><a href="javascript:;">复制</a></li>
 			<!-- <li><a href="javascript:;">分享</a></li>
 			<li><a href="javascript:;">移动到</a></li> -->
-			<li @click="reName"><a href="javascript:;">重命名</a></li>
-			<li @click="delectFlie"><a href="javascript:;">删除</a></li>
+			<li @mousedown.stop="reName"><a href="javascript:;">重命名</a></li>
+			<li @mousedown="delectFlie"><a href="javascript:;">删除</a></li>
 			
-					
-
 		</ul>
 
 				<ul id="nav-right">
@@ -87,7 +85,7 @@ export default {
 		cloneFile(){
 
 			this.$store.commit("cloneFile")
-
+			
 
 		},
 
@@ -100,6 +98,7 @@ export default {
 
 		//重命名
 		reName(){
+			this.$store.commit('hiddenMenu')
 
 			this.$store.commit("reName")
 

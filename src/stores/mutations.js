@@ -9,8 +9,22 @@
 	//左侧树状列表
 	import leftlisttree from "./mutations/leftlisttree"
 
+	//环境菜单
+	import contentmenu from "./mutations/contentmenu"
+
+
 
 export default {
+
+	//公用的方法在写这里
+
+	//隐藏环境菜单
+	hiddenMenu(state){
+
+		state.contextmenu = false
+
+	},
+
 
 	//功能区
 	...navigation,
@@ -23,7 +37,13 @@ export default {
 	...content,
 
 	//左侧树状列表
-	...leftlisttree
+	...leftlisttree,
+
+
+	//环境菜单
+	...contentmenu
+
+
 
 
 

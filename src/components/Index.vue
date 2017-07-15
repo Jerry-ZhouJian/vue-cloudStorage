@@ -1,7 +1,9 @@
 <template>
   <!-- <div id="box"> -->
 		
-		<div id="content">
+
+    <!-- 父级触发事件  @mousedown.prevent="hiddenMenu" -->
+		<div id="content" @contextmenu.prevent="" @mousedown.prevent.="hiddenMenu">
 			<!--header开始-->
 			<div id="header">
 				<div id="logo">
@@ -114,12 +116,25 @@ export default {
             
             }
 
-            console.dir();
+           
 
     		
 
 
-  	}
+  	},
+
+
+    //隐藏环境菜单
+    hiddenMenu(){
+
+      this.$store.commit('hiddenMenu')
+
+      this.$store.getters.mainContentData.forEach(item=>{
+
+        item.checked = false
+
+      })
+    }
 
 
 
@@ -154,7 +169,7 @@ body {font-size: 18px;color: #389cd1;}
 #header #lcon label{position: absolute;right:130px;top:20px;width:32px;height: 32px;cursor: hand}
 
 /*左侧列表*/
-#sider-list {height:581px;width:258px;border-right:1px solid #e1e8ed;float:left;text-align: left}
+#sider-list {height:581px;width:258px;border-right:1px solid #e1e8ed;float:left;text-align: left;overflow: auto}
 .sider-header {width:258px;height: 48px;background: #ffffff;color: #000;font-size: 16px;line-height:48px;padding-left: 10px;font-weight: bold;border-bottom: 2px solid #e1e8ed}
 
 

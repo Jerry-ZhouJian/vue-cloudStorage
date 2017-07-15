@@ -26,6 +26,7 @@ export default {
 	//复制文件
 	cloneFile(state){
 
+
 		state.mainContentData.forEach((item)=>{
 
 			if(item.checked){
@@ -56,9 +57,10 @@ export default {
 
 		})
 
+	
+		state.checkAll = false;
+
 		
-
-
 	},
 
 
@@ -158,39 +160,31 @@ export default {
 
 	//重命名
 	reName(state){
+
+		//统计被选中的数量
 		let n=0;
 		state.mainContentData.forEach((item,index)=>{
 			if(item.checked){
 				n++;
 			}
-
-
-
 		})
 
+		//如果数量超过1个，则不能重命名
 		if(n != 1){
-
 			return;
-
 		}else{
-
 			state.mainContentData.forEach((item,index)=>{
-			if(item.checked){
-				item.rename = false
+				if(item.checked){
 
-				state.reName = item.name
+					//显示改名字的输入框
+					item.rename = false
 
-			}
+					//把修改之前的名字存起来
+					state.reName = item.name
 
-
-
-		})
-			
-
+				}
+			})	
 		}
-
-		
-
 	},
 
 

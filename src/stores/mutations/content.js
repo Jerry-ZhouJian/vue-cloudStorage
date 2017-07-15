@@ -27,19 +27,41 @@ export default {
 		//将当前点击的放入面包屑数组
 		state.crumbsData.push(data)
 
+		state.checkAll = false
+
+		state.mainContentData.forEach(item=>{
+
+			item.checked = state.checkAll
+
+
+
+		})
+
+
 	},
 
 
 	//修改对应数据checked值
 	changeChecked(state,data){
+		let n=0;
+		state.mainContentData.forEach((item)=>{
 
-		// state.mainContentData.forEach((item)=>{
+			if(item.checked){		
+				n++;
+			}
+		})
 
-		// 	if(item.checked){		
-		// 		console.log(item);
-		// 	}
-		// })
 
+		if(n==state.mainContentData.length){
+
+			state.checkAll = true
+
+		}else{
+
+			state.checkAll = false
+
+
+		}
 
 	},
 
@@ -88,6 +110,15 @@ export default {
 		state.createDataArr = []
 
 		
+	},
+
+
+
+	//显示环境菜单状态
+	changeMenu(state){
+
+		state.contextmenu = true
+
 	}
 
 

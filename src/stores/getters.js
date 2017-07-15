@@ -54,6 +54,27 @@ export default {
 		return state.mainContentDataStyle;
 
 		
+	},
+
+
+
+	//将全选数据传递出去
+
+	checkAll(state){
+
+		
+		return state.checkAll;
+
+
+	},
+
+
+
+	//将环境菜单状态传递出去
+	contextmenu(state){
+
+		return state.contextmenu;
+
 	}
 
 
