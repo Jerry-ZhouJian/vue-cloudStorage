@@ -74,7 +74,7 @@ export default {
 	methods:{
 		dataIndex() {
 			
-			// this.$store.commit('regionData',this.dataindex);
+			this.$store.commit("changeChecked")
 			return this.$store.getters.mainContentData;
         },
 
@@ -102,6 +102,9 @@ export default {
 
                 //判断全选
                 this.$store.commit("changeChecked")
+
+                //取消新建文件
+                this.$store.commit("cancelCreate")
 
            
 

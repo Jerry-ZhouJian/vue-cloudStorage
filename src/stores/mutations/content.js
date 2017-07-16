@@ -4,42 +4,56 @@ export default {
 	//初始化页面数据
 	getInitializeData(state){
 
-		state.mainContentData = state.allData
+
+		if(!!state.crumbsData[0]){
+
+			state.mainContentData = state.crumbsData[state.crumbsData.length-1].childTreeNode 
+
+		}else{
+
+			state.mainContentData = state.allData
+
+		}
+
 
 	},
 
 	//点击文件夹显示子级数据
 	showChild(state,data){
-		
-		//要现实的子级存起来
-		state.mainContentData = data.childTreeNode
 
-		//将层ID对应改掉
-		state.tierID = data.id
-		
-		//如果面包屑导航里面有此数据，再点击不在渲染面包屑
-		if(state.crumbsData.includes(data)){
+		//顶层判断
+		if(!data.childTreeNode){
 
-				return;
+			state.mainContentData = data
 
+			return;
 		}
 
-		//将当前点击的放入面包屑数组
-		state.crumbsData.push(data)
-
-		state.checkAll = false
-
-		state.mainContentData.forEach(item=>{
-
-			item.checked = state.checkAll
-
-
-
-		})
+		//要现实的子级存起来
+		state.mainContentData = data.childTreeNode
 
 
 	},
 
+	//取消新建文件
+	cancelCreate(state){
+
+		state.createDataArr = []
+
+		
+	},
+
+	//隐藏重命名输入框
+	hiddenReName(state){
+
+		state.mainContentData.forEach(item=>{
+
+	        //修改成功，影藏输入框，取消选中状
+	        item.rename = true
+
+	     })
+
+	},
 
 	//修改对应数据checked值
 	changeChecked(state){
@@ -102,16 +116,13 @@ export default {
 	
 		state.mainContentData.push(data)
 
-	},
-
-
-	//取消新建文件
-	cancelCreate(state){
-
-		state.createDataArr = []
 
 		
+
 	},
+
+
+	
 
 
 
@@ -133,9 +144,17 @@ export default {
                 data.checked = false
 
 
-	}
+	},
 
 
+
+
+changeContextMenu(state){
+
+	state.contextmenu = true
+
+
+}
 
 
 }

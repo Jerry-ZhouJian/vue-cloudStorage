@@ -85,6 +85,16 @@ export default {
 
   },
 
+  created(){
+      let allData = JSON.parse(localStorage.getItem('allData'));
+
+        if(allData != null){
+          this.$store.commit('storeData',allData)
+
+        }
+
+  },
+
   methods:{
   	choosepic(e){
 
@@ -133,8 +143,8 @@ export default {
       //隐藏环境菜单
       this.$store.commit('hiddenContextMenu')
 
-      //隐藏重命名
-      this.$store.commit('hiddenReName')
+      //初始化数据
+      this.$store.commit('initDataStatus')
 
       //确定新建文件
       this.$store.commit("changeChecked")

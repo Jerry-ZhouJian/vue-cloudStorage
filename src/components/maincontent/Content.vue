@@ -7,14 +7,14 @@
       <div class="folder" ></div>
       <p v-show="item.rename">{{item.name}}</p>
       <p v-show="!item.rename" @click.stop="" @mousedown.stop=""><input type="text" v-model="item.name" v-focus ><button @click.stop="sureReName(item)">确定</button><button @click.stop="cancelReName(item)">取消</button></p>
-      <input type="checkbox" :class="{show:item.checked}" v-model="item.checked" @click.stop="changeChecked()" @mousedown.stop="">
+      <input type="checkbox" :class="{show:item.checked}" v-model="item.checked" @click.stop="changeChecked(item)" @mousedown.stop="">
     </li>
 
 
     
 
     <li v-for="(item,index) in createDataArr" :class="{checked:item.checked} " :key="item.id" @click.stop="">
-      <div class="folder" @click="showChild(item.id)"></div>
+      <div class="folder" @click="showChild(item)"></div>
       <p @click.stop="" @mousedown.stop=""><input type="text" v-model="item.name" v-focus><button @click.stop="upFile(item)">确定</button><button @click="cancelCreate">取消</button></p>
     </li>
     
@@ -46,7 +46,18 @@ import FileMenu from "@/components/contextmenu/FileMenu"
         //初始化获取数据
         created(){
 
-            this.$store.commit('getInitializeData')
+            // let allData = JSON.parse(localStorage.getItem('allData'));
+
+            // if(allData != null){
+            //     console.log('mainContentData');
+                
+
+            // }else{
+
+                this.$store.commit('getInitializeData')
+
+            // }
+
         },
         
 		computed:{
@@ -76,25 +87,36 @@ import FileMenu from "@/components/contextmenu/FileMenu"
             //显示子文件
 			showChild(item){
 
-                //新建文件夹，如果名字没有确定，是点不进去的
-                if(!item.name){
+                //显示子级数据
+                this.$store.commit("showChild",item)   
+                
+                //展开对应树节点
+                this.$store.commit("unFoldTreeNode",item)
 
-                    return
+                //修改面包屑内容
+                this.$store.commit("changeCrumbsData",item)
 
-                }
-                //通知mutations更改数据
-				this.$store.commit("showChild",item)
+                //取消新建文件
+                 this.$store.commit("cancelCreate")
 
-                // this.$store.commit("showChildTreeNode",item)
+                //localStorage储存面包屑
+                // localStorage.setItem('mainContentData',JSON.stringify(this.$store.getters.mainContentData));
 
-                // item.open = !item.open
 			},
 
             //改变checked装态
-			changeChecked(){
+			changeChecked(data){
 
-                //影藏环境菜单
+                //隐藏文件菜单
                 this.$store.commit('hiddenMenu')
+
+                //隐藏环境菜单
+                this.$store.commit('hiddenContextMenu')
+
+                //将所有数据checked变为false
+                this.$store.commit('hiddenReName')
+
+                // data.checked = true;
 
                 
 				this.$store.commit("changeChecked")
@@ -190,6 +212,9 @@ import FileMenu from "@/components/contextmenu/FileMenu"
 
                 //判断全选
                 this.$store.commit("changeChecked")
+
+                //取消新建文件
+                this.$store.commit("cancelCreate")
 
             }
 

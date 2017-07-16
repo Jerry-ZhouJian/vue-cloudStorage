@@ -29,8 +29,18 @@
 
 			//打开文件
 			openFile(){
-				this.$store.commit('hiddenMenu')
-				this.$store.commit('showChild',this.data)
+				//显示子级数据
+                this.$store.commit("showChild",this.data)   
+                
+                //展开对应树节点
+                this.$store.commit("unFoldTreeNode",this.data)
+
+                //修改面包屑内容
+                this.$store.commit("changeCrumbsData",this.data)
+
+                //隐藏文件菜单
+                this.$store.commit('hiddenMenu')
+
 			},
 
 			//复制文件

@@ -14,8 +14,8 @@
 				<ul id="nav-right">
 					
 
-					<li @click="changeStyleLarge" :class="{selected:selectedStuta}"><span></span><span></span></li>
-					<li @click="changeStyleList" id="sort" :class="{selected:!selectedStuta}"><span></span><span></span><span></span></li>
+					<li @click="changeStyleLarge" :class="{selected:mainContentDataStyle}"><span></span><span></span></li>
+					<li @click="changeStyleList" id="sort" :class="{selected:!mainContentDataStyle}"><span></span><span></span><span></span></li>
 
 				</ul>
 
@@ -59,25 +59,38 @@ export default {
 
 	},
 
+	created(){
+
+		let mainContentDataStyle = JSON.parse(localStorage.getItem('mainContentDataStyle'));
+
+        if(mainContentDataStyle != null){
+          this.$store.commit('getMainContentDataStyle',mainContentDataStyle)
+        }
+
+		
+
+
+	},
+
+	computed:{
+
+		mainContentDataStyle(){
+
+
+			return this.$store.getters.mainContentDataStyle
+		}
+
+
+	},
+
 	methods:{
 
 		//新建文件夹
 		createFile(){
 
-	
-
 			//如果当前新建文件夹没有确定名称，则不能再新建
-			if(this.$store.getters.createDataArr.length == 1){
+			this.$store.commit("createFile")
 
-					return
-
-
-			}else{
-
-
-				this.$store.commit("createFile")
-			}
-			
 		},
 
 
@@ -112,7 +125,7 @@ export default {
 		//大图显示
 		changeStyleLarge(){
 
-			this.selectedStuta = true
+		
 
 			this.$store.commit('changeStyleLarge')
 			
@@ -125,7 +138,7 @@ export default {
 		//列表显示
 		changeStyleList(){
 
-			this.selectedStuta = false
+			
 			this.$store.commit('changeStyleList')
 
 
