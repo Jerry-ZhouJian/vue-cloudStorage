@@ -42,17 +42,18 @@ export default {
 
 
 	//修改对应数据checked值
-	changeChecked(state,data){
+	changeChecked(state){
 		let n=0;
 		state.mainContentData.forEach((item)=>{
 
-			if(item.checked){		
+			if(item.checked){
+			//统计checked为true的数量		
 				n++;
 			}
 		})
 
 
-		if(n==state.mainContentData.length){
+		if(n==state.mainContentData.length && n != 0){
 
 			state.checkAll = true
 
@@ -117,7 +118,20 @@ export default {
 	//显示环境菜单状态
 	changeMenu(state){
 
-		state.contextmenu = true
+		state.filemenu = true
+
+	},
+
+
+
+
+	//取消重命名
+	cancelReName(state,data){
+
+				data.name = state.reName
+                data.rename = true;
+                data.checked = false
+
 
 	}
 

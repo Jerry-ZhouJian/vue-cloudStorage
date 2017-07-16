@@ -1,9 +1,17 @@
 export default {
 
 	//面包屑功能区
+
+	changeCrumbsData(){
+
+
+
+
+	},
+
 	//返回上一层
 	backUpper(state){
-
+		console.log(state);
 		state.checkAll = false
 		//当面包屑数组为空时，不能返回上一层
 		if(!state.crumbsData.length){
@@ -82,7 +90,9 @@ export default {
 	//全选
 	checkAll(state){
 
-		state.checkAll = !state.checkAll
+		state.checkAll = true
+
+
 		state.mainContentData.forEach(item=>{
 
 			item.checked = state.checkAll
@@ -98,8 +108,10 @@ export default {
 
 	checkAllInput(state){
 
-		//先将数据改变
-		state.checkAll = !state.checkAll
+		// //先将数据改变
+		state.checkAll = true
+
+
 		state.mainContentData.forEach(item=>{
 
 			//同步数据

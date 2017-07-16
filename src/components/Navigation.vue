@@ -98,8 +98,11 @@ export default {
 
 		//重命名
 		reName(){
+
+			//隐藏环境菜单
 			this.$store.commit('hiddenMenu')
 
+			//重命名
 			this.$store.commit("reName")
 
 		},

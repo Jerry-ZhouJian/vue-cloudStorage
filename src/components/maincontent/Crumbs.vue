@@ -11,8 +11,8 @@
 	</div>
 	<div class="checkAll">
 	<p>
-		<input type="checkbox" id="checkall" v-model="checkAll" @click="checkallinput">
-		<label for="checkall" @click.stop="checkall">全选</label>
+		<input type="checkbox"  v-model="checkAll" @click.stop="checkallinput">
+		<label  @click.stop="checkall">全选</label>
 	</p>
 
 	
@@ -36,9 +36,6 @@ export default {
 		return {
 
 
-			
-
-
 
 		}
 
@@ -47,9 +44,16 @@ export default {
 	},
 
 	methods:{
+		//返回上一层
 		backUpper(){
 
+			//显示上一层数据
 			this.$store.commit("backUpper")
+
+
+			//改变面包屑导航
+
+
 
 		},
 		backTop(){
@@ -70,25 +74,43 @@ export default {
 
 		//全选
 		checkall(){
-
-			
+	
+			this.checked = !this.checked
 			this.$store.commit("checkAll")
 
-			this.checked = !this.checked
-			
-		
 
 		},
 
-
+		//复选框全选
 		checkallinput(){
 
+
+		
 			this.$store.commit("checkAllInput")
+
+			
+
+			
+			
 
 		}
 
 
 
+
+
+	},
+
+	whatch:{
+		checkAll(val,oldVal){
+			
+
+				console.log(val);
+
+
+			}
+
+		
 
 
 	},
@@ -106,6 +128,10 @@ export default {
 	    checkAll(){
 
 	    	return this.$store.getters.checkAll
+
+	   
+
+	    	
 
 	    }
 

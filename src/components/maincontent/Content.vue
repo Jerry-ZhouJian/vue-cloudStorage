@@ -3,11 +3,11 @@
 <div>
 <ul id="list" class="clear">
 
-    <li v-for="(item,index) in mainContentData" :class="{checked:item.checked}" class="content" :key="item.id" @click.stop="showChild(item)"  @contextmenu.prevent="showMenu($event,item)" >
+    <li v-for="(item,index) in mainContentData" :class="{checked:item.checked}" class="content" :key="item.id" @click.stop="showChild(item)"  @contextmenu.prevent.stop="showFileMenu($event,item)" >
       <div class="folder" ></div>
       <p v-show="item.rename">{{item.name}}</p>
-      <p v-show="!item.rename" ><input type="text" v-model="item.name" v-focus @mousedown.stop="" @mousedown.stop=""><button @click.stop="sureReName(item)">确定</button><button @click.stop="cancelReName(item)">取消</button></p>
-      <input type="checkbox" :class="{show:item.checked}" v-model="item.checked" @click.stop="changeChecked(item)">
+      <p v-show="!item.rename" @click.stop="" @mousedown.stop=""><input type="text" v-model="item.name" v-focus ><button @click.stop="sureReName(item)">确定</button><button @click.stop="cancelReName(item)">取消</button></p>
+      <input type="checkbox" :class="{show:item.checked}" v-model="item.checked" @click.stop="changeChecked()" @mousedown.stop="">
     </li>
 
 
@@ -15,20 +15,19 @@
 
     <li v-for="(item,index) in createDataArr" :class="{checked:item.checked} " :key="item.id" @click.stop="">
       <div class="folder" @click="showChild(item.id)"></div>
-      <p><input type="text" v-model="item.name" v-focus><button @click.stop="upFile(item)">确定</button><button @click="cancelCreate">取消</button></p>
-
+      <p @click.stop="" @mousedown.stop=""><input type="text" v-model="item.name" v-focus><button @click.stop="upFile(item)">确定</button><button @click="cancelCreate">取消</button></p>
     </li>
     
 </ul>
 
-<content-menu ref="ul" :data="menudata" v-show="contextmenu"></content-menu>
+<file-menu ref="ul" :data="menudata" v-show="filemenu"></file-menu>
 
 </div>
 </template>
 
 <script type="text/javascript">
 
-import ContentMenu from "@/components/ContentMenu"
+import FileMenu from "@/components/contextmenu/FileMenu"
 
 	export default {
 		data(){
@@ -42,7 +41,7 @@ import ContentMenu from "@/components/ContentMenu"
             }
 
         },
-        components:{ContentMenu},
+        components:{FileMenu},
 
         //初始化获取数据
         created(){
@@ -63,9 +62,9 @@ import ContentMenu from "@/components/ContentMenu"
 
             },
 
-            contextmenu(){
+            filemenu(){
 
-                return this.$store.getters.contextmenu
+                return this.$store.getters.filemenu
 
 
             }
@@ -85,14 +84,20 @@ import ContentMenu from "@/components/ContentMenu"
                 }
                 //通知mutations更改数据
 				this.$store.commit("showChild",item)
+
+                // this.$store.commit("showChildTreeNode",item)
+
+                // item.open = !item.open
 			},
 
             //改变checked装态
-			changeChecked(item){
+			changeChecked(){
 
+                //影藏环境菜单
+                this.$store.commit('hiddenMenu')
 
-
-				this.$store.commit("changeChecked",item)
+                
+				this.$store.commit("changeChecked")
 
 			},
             //提交新建的文件夹
@@ -160,28 +165,21 @@ import ContentMenu from "@/components/ContentMenu"
 
                 this.$store.commit('cancelReName',item)
 
-                item.name = this.$store.getters.reName
-                item.rename = true;
-                item.checked = false
 
             },
 
-            //环境菜单
-            showMenu(e,data){
+            //文件菜单
+            showFileMenu(e,data){
                 //e事件对象
 
                 //设置环境菜单的位置
                 this.$refs.ul.$el.style.left = e.clientX + 'px'
                 this.$refs.ul.$el.style.top = e.clientY + 'px'
                 
-                //将所有数据checked变为false，当前点击的变为true
-                this.$store.getters.mainContentData.forEach(item=>{
+                //将所有数据checked变为false
+                this.$store.commit('hiddenReName')
 
-                     //修改成功，影藏输入框，取消选中状态
-                        item.rename = true;
-                        item.checked = false
-
-                })
+                //当前点击的变为true
                 data.checked =true
 
                 //将当前数据传递给子组件
@@ -189,6 +187,9 @@ import ContentMenu from "@/components/ContentMenu"
 
                 //发请求改变环境菜单的状态
                 this.$store.commit('changeMenu')
+
+                //判断全选
+                this.$store.commit("changeChecked")
 
             }
 

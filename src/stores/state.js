@@ -126,8 +126,15 @@ export default {
     checkAll:false,
 
 
-    //控制环境菜单
+    //控制显示文件菜单
+    filemenu:false,
+
+
+    //控制显示环境菜单
     contextmenu:false
+
+
+
 
    
 

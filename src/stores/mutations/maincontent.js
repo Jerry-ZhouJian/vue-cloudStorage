@@ -1,19 +1,29 @@
 export default {
 
-regionData(state,data){
-
-console.log(data);
-
-	state.mainContentData.forEach((item,index)=>{
-
-
-		item.checked = data[index]
+// regionData(state,data){
 
 
 
-	})
+// 	state.mainContentData.forEach((item,index)=>{
 
-	console.log(state.mainContentData);
+
+// 		item.checked = data[index]
+
+
+
+// 	})
+
+	
+
+
+// },
+
+
+
+
+changeContextMenu(state){
+
+	state.contextmenu = true
 
 
 }

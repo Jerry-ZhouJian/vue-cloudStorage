@@ -1,17 +1,19 @@
 <template>
-	<div class="right-content" >
+	<div class="right-content">
 		<!-- 面包屑导航开始 -->	
 		<crumbs></crumbs>	
 		<!-- 面包屑导航结束 -->
 		
 		<!-- 主内容开始 -->
-		<div class="right-content-body" v-region="dataIndex">
+		<div class="right-content-body" v-region="dataIndex" @contextmenu.prevent.stop="showContextMenu($event)">
 			<content-data v-if="mainContentDataStyle"></content-data>
 			<content-list v-if="!mainContentDataStyle"></content-list>
 
 			<div class="box"></div>
 		</div>
 		<!-- 主内容结束 -->
+
+		<context-menu ref="contextmenu" v-show="contextmenu"></context-menu>
 
 	</div>
 	<!-- 主题内容 -->
@@ -24,6 +26,7 @@
 import Crumbs from "@/components/maincontent/Crumbs"
 import ContentData from "@/components/maincontent/Content"
 import ContentList from "@/components/maincontent/ContentList"
+import ContextMenu from "@/components/contextmenu/ContextMenu"
 
 
 
@@ -39,17 +42,27 @@ export default {
 
 
 	},
-	components:{Crumbs,ContentData,ContentList},
+	components:{Crumbs,ContentData,ContentList,ContextMenu},
 
 	computed:{
 		mainContentDataStyle(){
 
 
+
 			return this.$store.getters.mainContentDataStyle
 
 
-		}
+		},
 
+
+
+		//得到环境菜单状态
+		contextmenu(){
+
+
+			return this.$store.getters.contextmenu
+
+		}
 
 		
 
@@ -60,9 +73,38 @@ export default {
 
 	methods:{
 		dataIndex() {
-
+			
 			// this.$store.commit('regionData',this.dataindex);
 			return this.$store.getters.mainContentData;
+        },
+
+
+        //显示环境菜单
+        showContextMenu(e){
+
+        	
+            
+                //e事件对象
+
+                //设置环境菜单的位置
+                this.$refs.contextmenu.$el.style.left = e.clientX + 'px'
+                this.$refs.contextmenu.$el.style.top = e.clientY + 'px'
+                
+                //将所有数据checked变为false，当前点击的变为true
+                this.$store.commit('hiddenReName')
+           
+
+                //将当前数据传递给子组件
+               
+
+                //发请求改变环境菜单的状态
+                this.$store.commit('changeContextMenu')
+
+                //判断全选
+                this.$store.commit("changeChecked")
+
+           
+
         }
 
 		
@@ -178,6 +220,8 @@ export default {
 
 					//绑定onmouseup事件
 					document.onmouseup = function(e){
+
+						binding.value()
 
 
 						//取消onmousemove事件
