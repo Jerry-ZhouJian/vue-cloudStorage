@@ -3,6 +3,8 @@
 
 <ul class="contextmenu" style="" @mousedown.stop="">
     <li @mousedown="createFile">新建文件</li>
+    <li @mousedown="backUpper">返回上一层</li>
+    <li @mousedown="backTop">返回顶层</li>
    
     
 </ul>
@@ -41,10 +43,31 @@
 			
 			},
 
-			//刷新
+			//返回上一层
+			backUpper(){
 
-			reFresh(){
+	            //显示上一层数据
+				this.$store.dispatch("backUpper")
 
+	             //取消新建文件
+	            this.$store.commit("cancelCreate")  
+
+	            this.$store.commit('hiddenContextMenu')   
+
+			},
+
+
+			backTop(){
+
+            //显示子级数据
+            this.$store.commit("showChild",this.$store.getters.allData) 
+			//展开对应树节点
+            this.$store.commit("unFoldTreeNode",this.$store.getters.allData)
+
+            //修改面包屑内容
+            this.$store.commit("changeCrumbsData",this.$store.getters.allData)
+
+            this.$store.commit('hiddenContextMenu') 
 
 
 

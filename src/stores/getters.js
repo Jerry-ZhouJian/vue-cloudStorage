@@ -3,15 +3,10 @@ export default {
 	//将所有数据传递出去
 	allData(state){
 
+
+		//localStorage储存总数据
+        localStorage.setItem('allData',JSON.stringify(state.allData));
 		return state.allData;
-
-	},
-
-
-	//将左侧列表数据传递出去
-	leftData(state){
-
-			return state.leftData;
 
 	},
 
@@ -19,6 +14,7 @@ export default {
 	//将当前层显示的数据传递出去
 	mainContentData(state){
 
+		
 		return state.mainContentData
 
 	},
@@ -26,6 +22,9 @@ export default {
 
 	//将面包屑的数据传递出去
 	crumbsData(state){
+
+		//localStorage储存面包屑
+    	// localStorage.setItem('crumbsData',JSON.stringify(state.crumbsData));
 
 		return state.crumbsData;
 
@@ -50,6 +49,7 @@ export default {
 
 	//将显示形式传递出去
 	mainContentDataStyle(state){
+
 
 		return state.mainContentDataStyle;
 

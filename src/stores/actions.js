@@ -1,47 +1,26 @@
 export default {
 	//返回上一层
 	backUpper(store){
+
 		
-		store.state.checkAll = false
-		//当面包屑数组为空时，不能返回上一层
-		if(!store.state.crumbsData.length){
-			// store.commit('showChildTreeNode',store.state.allData)
-			return;
-		}
+			store.state.crumbsData.pop()
+
+			if(store.state.crumbsData[0]){
+
+				//显示子级数据
+		        store.commit("showChild",store.state.crumbsData[store.state.crumbsData.length-1]) 
+				//展开对应树节点
+		        store.commit("unFoldTreeNode",store.state.crumbsData[store.state.crumbsData.length-1])
 
 
-		store.state.crumbsData.pop();
-		
-		if(store.state.crumbsData.length-1 == -1){
-			store.state.mainContentData = store.state.allData
-			store.state.mainContentData.forEach(item=>{
+			}else{
 
-			item.checked = store.state.checkAll
+				//显示子级数据
+		        store.commit("showChild",store.state.allData) 
+				//展开对应树节点
+		        store.commit("unFoldTreeNode",store.state.allData)
 
+			}
 
-
-		})
-
-
-			return;
-
-		}
-
-		store.state.mainContentData = store.state.crumbsData[store.state.crumbsData.length-1].childTreeNode
-		store.state.mainContentData.forEach(item=>{
-
-			item.checked = store.state.checkAll
-
-
-
-		})
-
-
-
-
-		store.commit('showChildTreeNode',store.state.crumbsData[store.state.crumbsData.length-1])
-
-		store.state.crumbsData[store.state.crumbsData.length-1].open = !store.state.crumbsData[store.state.crumbsData.length-1].open
 	}
-
 }

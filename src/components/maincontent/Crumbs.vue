@@ -43,31 +43,56 @@ export default {
 
 	},
 
+	created(){
+		
+		this.$store.commit('getInitCrumbsData')
+
+	},
+
 	methods:{
 		//返回上一层
 		backUpper(){
 
-			//显示上一层数据
-			this.$store.commit("backUpper")
+            //显示上一层数据
+			this.$store.dispatch("backUpper")
 
-
-			//改变面包屑导航
-
-
+             //取消新建文件
+            this.$store.commit("cancelCreate")     
 
 		},
 		backTop(){
 
-			this.$store.commit("backTop")
+            //显示子级数据
+            this.$store.commit("showChild",this.$store.getters.allData) 
+			//展开对应树节点
+            this.$store.commit("unFoldTreeNode",this.$store.getters.allData)
+
+            //修改面包屑内容
+            this.$store.commit("changeCrumbsData",this.$store.getters.allData)
+
+            //取消新建文件
+            this.$store.commit("cancelCreate")
+
 
 
 		},
 
 
 		//跳转到指定层
-		goToFloor(data){
+		goToFloor(item){
 
-			this.$store.commit("goToFloor",data)
+			// this.$store.commit("goToFloor",data)
+
+			//显示子级数据
+            this.$store.commit("showChild",item) 
+			//展开对应树节点
+            this.$store.commit("unFoldTreeNode",item)
+
+            //修改面包屑内容
+            this.$store.commit("changeCrumbsData",item)
+
+            //取消新建文件
+            this.$store.commit("cancelCreate")
 
 
 		},
@@ -100,25 +125,12 @@ export default {
 
 
 	},
-
-	whatch:{
-		checkAll(val,oldVal){
-			
-
-				console.log(val);
-
-
-			}
-
-		
-
-
-	},
 	computed:{
 
 		//接受面包屑数据
 	    crumbsData(){
 
+	    	
 	        return this.$store.getters.crumbsData
 
 	    },

@@ -3,7 +3,7 @@
 
 
 <li>
-        <div @click='toggle(model)' >
+        <div @mousedown.stop='toggle(model)' >
         <!-- 如果model.childTreeNode有子级数据，显示文件图标1号 -->
         <!--  如果当前显示子级数据，显示文件图标2号-->
             <i :class="[{filetrue: model.childTreeNode[0]},{filefalse: !model.childTreeNode[0]},{opentrue: model.open && model.childTreeNode[0] }]"></i>
@@ -36,9 +36,22 @@ export default {
         },
         
         methods: {
-            toggle: function(model) {
-            	this.$store.commit("showChildTreeNode",model)    
-                 // model.open = !model.open
+            toggle(model) {
+
+
+                this.$store.commit("showChild",model)   
+                
+
+                this.$store.commit("unFoldTreeNode",model)
+
+                //修改面包屑内容
+                this.$store.commit("changeCrumbsData",model)
+                //取消新建文件
+                this.$store.commit("cancelCreate")
+
+                
+
+            	
                
          },
         }

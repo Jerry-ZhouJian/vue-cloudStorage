@@ -3,8 +3,23 @@
 
 export default {
 
+	//获得初始化展示形式
+	getMainContentDataStyle(state,data){
+
+
+
+		state.mainContentDataStyle = data
+
+
+	},
+
+
+
+
 	//新建文件
 	createFile(state){
+
+		state.createDataArr = []
 		state.createDataArr.push({ 
 			//pid指向父级id
 			pid: state.tierID,
@@ -192,8 +207,9 @@ export default {
 	//修改展示形式为大图
 	changeStyleLarge(state){
 
-		state.mainContentDataStyle = true
 
+		state.mainContentDataStyle = true
+		localStorage.setItem('mainContentDataStyle',JSON.stringify(state.mainContentDataStyle));
 	},
 
 
@@ -202,7 +218,7 @@ export default {
 	changeStyleList(state){
 
 		state.mainContentDataStyle = false
-
+		localStorage.setItem('mainContentDataStyle',JSON.stringify(state.mainContentDataStyle));
 
 
 	}
