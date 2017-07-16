@@ -1,11 +1,11 @@
 <template>
 	
 
-<ul class="contentmenu" style="" >
-    <li @click="openFile">打开</li>
-    <li @click="cloneFile">复制</li>
-    <li @click.stop="reName">重命名</li>
-    <li @click="delectFile">删除</li>
+<ul class="contentmenu" style="" @mousedown.stop="">
+    <li @mousedown="openFile">打开</li>
+    <li @mousedown="cloneFile">复制</li>
+    <li @mousedown="reName">重命名</li>
+    <li @mousedown="delectFile">删除</li>
 </ul>
 
 
@@ -98,7 +98,7 @@
 }
 
 .contentmenu li{
-	width:60px;
+	width:80px;
 	list-style: none;
 	text-align: center;
 	border: 1px solid #ccc;

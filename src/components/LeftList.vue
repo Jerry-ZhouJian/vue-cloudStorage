@@ -38,7 +38,7 @@ export default {
         methods: {
             toggle: function(model) {
             	this.$store.commit("showChildTreeNode",model)    
-                 model.open = !model.open
+                 // model.open = !model.open
                
          },
         }

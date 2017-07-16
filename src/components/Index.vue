@@ -3,7 +3,7 @@
 		
 
     <!-- 父级触发事件  @mousedown.prevent="hiddenMenu" -->
-		<div id="content" @contextmenu.prevent="" @mousedown.prevent.="hiddenMenu">
+		<div id="content" @contextmenu.prevent="" @mousedown="hiddenMenu">
 			<!--header开始-->
 			<div id="header">
 				<div id="logo">
@@ -26,10 +26,10 @@
 
 			<!-- 左侧列表开始 -->
 			<div id='sider-list'>
-			<h2 class="sider-header">项目列表</h2>
-			<ul>
-			<left-list v-for='model in allData' :model='model'></left-list>
-			</ul>
+  			<h2 class="sider-header">项目列表</h2>
+  			<ul>
+  			<left-list v-for='model in allData' :model='model'></left-list>
+  			</ul>
 			</div>
 			<!-- 左侧列表结束 -->
 			
@@ -126,15 +126,23 @@ export default {
 
     //隐藏环境菜单
     hiddenMenu(){
-
+     
+     //隐藏文件菜单
       this.$store.commit('hiddenMenu')
 
-      this.$store.getters.mainContentData.forEach(item=>{
+      //隐藏环境菜单
+      this.$store.commit('hiddenContextMenu')
 
-        item.checked = false
+      //隐藏重命名
+      this.$store.commit('hiddenReName')
 
-      })
+      //确定新建文件
+      this.$store.commit("changeChecked")
+  
     }
+
+
+
 
 
 

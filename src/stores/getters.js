@@ -70,6 +70,15 @@ export default {
 
 
 
+	//将文件菜单状态传递出去
+	filemenu(state){
+
+		return state.filemenu;
+
+	},
+
+
+
 	//将环境菜单状态传递出去
 	contextmenu(state){
 
