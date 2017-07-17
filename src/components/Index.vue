@@ -89,7 +89,11 @@ export default {
       let allData = JSON.parse(localStorage.getItem('allData'));
 
         if(allData != null){
+
           this.$store.commit('storeData',allData)
+
+          this.$store.commit('initDataStatus')
+
 
         }
 
